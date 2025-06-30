@@ -12,11 +12,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @RestController
 @RequiredArgsConstructor
 public class TodoController {
 
     private final TodoService todoService;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     @PostMapping("/todos")
     public ResponseEntity<TodoSaveResponse> saveTodo(
@@ -29,9 +33,15 @@ public class TodoController {
     @GetMapping("/todos")
     public ResponseEntity<Page<TodoResponse>> getTodos(
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "all") String weather,
+            @RequestParam(defaultValue = "1970-01-01 00:00:00") String start,
+            @RequestParam(defaultValue = "2999-12-31 23:59:59") String end
     ) {
-        return ResponseEntity.ok(todoService.getTodos(page, size));
+        LocalDateTime startDate = LocalDateTime.parse(start, dateFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime endDate = LocalDateTime.parse(end, dateFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        return ResponseEntity.ok(todoService.getTodos(page, size, weather, startDate, endDate));
     }
 
     @GetMapping("/todos/{todoId}")
