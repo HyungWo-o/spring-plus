@@ -39,3 +39,6 @@ Todo 엔티티의 managers 필드에 적용된 @OneToMany 어노테이션에
 cascade = CascadeType.PERSIST를 추가하여 할 일 등록 시 등록자를 담당자로 자동 설정
 
 
+lv7.
+CommentRepository의 findByTodoIdWithUser() 메서드에서 N+1 문제가 발생
+@Query에서 comment와 user가 JOIN 되어있는데 N+1 문제를 해결하기 위해 JOIN FETCH로 수정하여 페치조인 적용
