@@ -32,3 +32,10 @@ AdminAccessLogginAspect 클래스의 logAfterChangeUserRole() 메서드에 적�
 @After 어노테이션을 @Before 어노테이션으로 수정,
 @Before(execution())의 적용 경로가 UserController의 getUser() 메서드로 잘못 적용되어있어
 UserAdminController.changeUserRole(..) 로 수정
+
+
+lv6.
+Todo 엔티티의 managers 필드에 적용된 @OneToMany 어노테이션에
+cascade = CascadeType.PERSIST를 추가하여 할 일 등록 시 등록자를 담당자로 자동 설정
+
+
