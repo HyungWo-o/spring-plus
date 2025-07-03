@@ -1,9 +1,12 @@
 package org.example.expert.domain.user.enums;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 
 import java.util.Arrays;
 
+@Getter
 public enum UserRole {
     ADMIN, USER;
 
