@@ -42,3 +42,16 @@ cascade = CascadeType.PERSIST를 추가하여 할 일 등록 시 등록자를 �
 lv7.
 CommentRepository의 findByTodoIdWithUser() 메서드에서 N+1 문제가 발생
 @Query에서 comment와 user가 JOIN 되어있는데 N+1 문제를 해결하기 위해 JOIN FETCH로 수정하여 페치조인 적용
+
+
+lv8.
+JPQL로 작성된 findByIdWithUser() 쿼리메서드를 QueryDSL 의존성과 파일들을 추가하여 QueryDSL 코드로 체인지
+leftJoin의 N+1 문제를 함께 해결하기위하여 leftJoin() 뒤에 fetchJoin()을 추가하여 N+1 문제를 방지함
+
+
+lv9.
+Spring Security를 도입하기 위하여 기존에 적용되어있던 Filter와 AuthArgumentResolver를 수정
+Security 의존성을 추가하였고, SecurityConfig 파일을 추가하여 인가 설정함
+기존에 AuthArgumentResolver에서 HttpServletRequest에 저장하고 AuthUser로 가져오던 데이터를
+SecurityContextHolder에 Security의 UserDetails를 커스텀한 Dto에 담아서 Controller에 전달
+AuthUser를 사용하던 메서드들에서 CustomUserDetails로 수정
