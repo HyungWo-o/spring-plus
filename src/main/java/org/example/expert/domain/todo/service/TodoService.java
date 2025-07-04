@@ -2,11 +2,11 @@ package org.example.expert.domain.todo.service;
 
 import lombok.RequiredArgsConstructor;
 import org.example.expert.client.WeatherClient;
-import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
+import org.example.expert.domain.todo.dto.response.TodoSearch;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoRepository;
 import org.example.expert.domain.user.dto.response.UserResponse;
@@ -15,8 +15,6 @@ import org.example.expert.global.CustomUserDetails;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,14 +58,6 @@ public class TodoService {
             weather = "";
         }
 
-        if(startDate.equals("all")) {
-            startDate = LocalDateTime.of(1970, 1, 1, 0, 0);
-        }
-
-        if(endDate.equals("all")) {
-            endDate = LocalDateTime.of(2999, 12, 31, 23, 59);
-        }
-
         Page<Todo> todos = todoRepository.findByWeatherWithModifiedAtOrderByModifiedAtDesc(weather, startDate, endDate, pageable);
 
         return todos.map(todo -> new TodoResponse(
@@ -100,5 +90,13 @@ public class TodoService {
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
+    }
+
+    public Page<TodoSearch> searchTodos(int page, int size, String title, LocalDateTime startDate, LocalDateTime endDate, String nickname) {
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+
+        return todoRepository.findByTitleWithModifiedAtWithNicknameOrderByModifiedAtDesc(title, startDate, endDate, nickname, pageable);
+
     }
 }

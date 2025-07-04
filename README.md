@@ -55,3 +55,14 @@ Security 의존성을 추가하였고, SecurityConfig 파일을 추가하여 인
 기존에 AuthArgumentResolver에서 HttpServletRequest에 저장하고 AuthUser로 가져오던 데이터를
 SecurityContextHolder에 Security의 UserDetails를 커스텀한 Dto에 담아서 Controller에 전달
 AuthUser를 사용하던 메서드들에서 CustomUserDetails로 수정
+
+
+lv10.
+QueryDsl을 사용하여 Todos 검색 기능 페이징 반환
+새로운 API로 만들기 위하여 Controller에 todoSearch() 메서드 작성
+반환타입 요구사항에 맞추기 위하여 TodoSearch DTO 작성
+Service에 todoSearch() 메서드 작성, QueryDSL 사용을 위한 쿼리메서드 작성
+Repository QImpl파일에 QueryDSL로 응답 DTO에 필요한 필드, 카운트 조회
+## 여기서 managers 카운트 할 때 같은 매니저 id를 중복으로 카운트해서 애먹었습니다.
+## 구글링하여 distinct를 카운트에도 사용하는 countDistinct()를 사용하여 해결.
+페이징을 위한 전체 카운트 totalTodos 조회하여 페이징에 추가

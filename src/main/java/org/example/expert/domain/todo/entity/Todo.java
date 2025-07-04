@@ -1,5 +1,6 @@
 package org.example.expert.domain.todo.entity;
 
+import com.querydsl.core.annotations.QueryProjection;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
